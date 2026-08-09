@@ -1,0 +1,2528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartEats - Food Ordering System</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f6f8;
+    color:#222;
+}
+
+button,input,select,textarea{font:inherit}
+
+button{cursor:pointer}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#fff;
+    box-shadow:0 2px 10px #0001;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    color:#e63946;
+}
+
+nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+}
+
+nav button{
+    border:0;
+    background:transparent;
+    padding:9px 12px;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+nav button:hover{
+    background:#f0f0f0;
+}
+
+.cart-nav{
+    background:#e63946!important;
+    color:white;
+}
+
+.page{display:none}
+.page.active{display:block}
+
+.hero{
+    min-height:520px;
+    display:flex;
+    align-items:center;
+    padding:50px 8%;
+    color:white;
+    background:
+    linear-gradient(#0009,#0009),
+    url("https://images.unsplash.com/photo-1504674900247-0877df9cc836")
+    center/cover;
+}
+
+.hero-content{max-width:700px}
+
+.hero h1{
+    font-size:55px;
+    margin:15px 0;
+}
+
+.hero h1 span{color:#ffd166}
+
+.hero p{
+    font-size:19px;
+    margin-bottom:20px;
+}
+
+.btn{
+    background:#e63946;
+    color:white;
+    border:0;
+    padding:12px 20px;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+.btn:hover{background:#c92f3b}
+
+.btn-dark{
+    background:#222;
+    color:#fff;
+}
+
+.btn-danger{
+    background:#e63946;
+    color:white;
+    border:0;
+    padding:9px 14px;
+    border-radius:6px;
+}
+
+.section{
+    max-width:1200px;
+    margin:auto;
+    padding:45px 20px;
+}
+
+.section>h2{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 3px 12px #00000012;
+}
+
+.feature{text-align:center}
+
+.feature-icon{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.menu-tools{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+.menu-tools input,
+.menu-tools select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+}
+
+.menu-tools input{width:320px}
+
+.food-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.food-card{
+    background:#fff;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 3px 12px #00000012;
+}
+
+.food-img{
+    height:150px;
+    background:#eee;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:65px;
+    margin-bottom:15px;
+}
+
+.food-card p{
+    color:#666;
+    margin:8px 0;
+    min-height:40px;
+}
+
+.food-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:15px;
+}
+
+.price{
+    color:#e63946;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.auth-wrap{
+    min-height:650px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+}
+
+.auth-box{
+    background:#fff;
+    width:100%;
+    max-width:430px;
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0 5px 25px #00000014;
+}
+
+.auth-box h2{text-align:center}
+.auth-box>p{
+    text-align:center;
+    color:#666;
+    margin:8px 0 20px;
+}
+
+.auth-box label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+.auth-box input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    margin-top:6px;
+}
+
+.auth-box .btn{
+    width:100%;
+    margin-top:20px;
+}
+
+.auth-switch{
+    text-align:center;
+    margin-top:20px;
+}
+
+.auth-switch a{
+    color:#e63946;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.message{
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+.cart-box{
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+}
+
+.cart-item{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 100px;
+    gap:15px;
+    align-items:center;
+    padding:15px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.qty{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.qty button{
+    width:30px;
+    height:30px;
+    border:0;
+    border-radius:5px;
+}
+
+.checkout{
+    display:grid;
+    gap:12px;
+    margin-top:25px;
+}
+
+.checkout input,
+.checkout select,
+.checkout textarea{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+}
+
+.order{
+    background:#fff;
+    padding:22px;
+    border-radius:12px;
+    margin-bottom:18px;
+    box-shadow:0 3px 12px #00000010;
+}
+
+.order-head{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.status{
+    background:#ffe5e5;
+    color:#e63946;
+    padding:6px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    height:max-content;
+}
+
+.empty{
+    background:#fff;
+    padding:40px;
+    text-align:center;
+    border-radius:12px;
+}
+
+.admin-header{
+    background:#222;
+    color:white;
+    padding:25px;
+    border-radius:12px;
+    margin-bottom:25px;
+}
+
+.admin-stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:30px;
+}
+
+.stat{
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 3px 12px #00000010;
+}
+
+.stat h2{
+    color:#e63946;
+    margin-top:8px;
+}
+
+.admin-form{
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    margin-bottom:30px;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:1px solid #ccc;
+    border-radius:7px;
+}
+
+.admin-food{
+    background:#fff;
+    padding:18px;
+    border-radius:10px;
+    box-shadow:0 3px 12px #00000010;
+}
+
+.admin-food .emoji{
+    font-size:45px;
+}
+
+.admin-order{
+    background:#fff;
+    padding:22px;
+    border-radius:12px;
+    margin-bottom:15px;
+    box-shadow:0 3px 12px #00000010;
+}
+
+.admin-order select{
+    padding:10px;
+    margin-top:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+}
+
+footer{
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:35px;
+    margin-top:40px;
+}
+
+footer p{
+    color:#aaa;
+    margin-top:8px;
+}
+
+#toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#222;
+    color:#fff;
+    padding:14px 20px;
+    border-radius:7px;
+    display:none;
+    z-index:5000;
+}
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+    }
+
+    nav{
+        justify-content:center;
+    }
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    .cart-item{
+        grid-template-columns:1fr;
+    }
+
+    .menu-tools input{
+        width:100%;
+    }
+}
+
+footer p:last-child{
+    color: #ffffff !important;  /* 4. White */
+    font-weight: bold !important;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+<div class="navbar">
+
+<div class="logo">🍔 SmartEats</div>
+
+<nav>
+
+<button onclick="showPage('home')">Home</button>
+
+<button onclick="showPage('menu')">Menu</button>
+
+<button onclick="showPage('orders')">📦 Orders</button>
+
+<button onclick="showPage('cart')" class="cart-nav">
+🛒 Cart (<span id="cartCount">0</span>)
+</button>
+
+<button onclick="showPage('auth')" id="loginNav">
+🔐 Login
+</button>
+
+<button onclick="logout()" id="logoutNav" style="display:none">
+Logout
+</button>
+
+<button onclick="showPage('adminLogin')">
+⚙️ Admin
+</button>
+
+</nav>
+
+</div>
+</header>
+
+
+<!-- ================= HOME ================= -->
+
+<section id="home" class="page active">
+
+<div class="hero">
+
+<div class="hero-content">
+
+<p>WELCOME TO SMARTEATS</p>
+
+<h1>
+Delicious Food,
+<span>Delivered Fast!</span>
+</h1>
+
+<p>
+Order your favourite food quickly and easily
+with our smart food ordering system.
+</p>
+
+<button class="btn" onclick="showPage('menu')">
+Order Now 🍔
+</button>
+
+</div>
+</div>
+
+<div class="section">
+
+<h2>Why Choose SmartEats?</h2>
+
+<div class="features">
+
+<div class="card feature">
+<div class="feature-icon">🍔</div>
+<h3>Fresh Food</h3>
+<p>Fresh and delicious food.</p>
+</div>
+
+<div class="card feature">
+<div class="feature-icon">⚡</div>
+<h3>Fast Delivery</h3>
+<p>Quick and reliable delivery.</p>
+</div>
+
+<div class="card feature">
+<div class="feature-icon">🔒</div>
+<h3>Secure</h3>
+<p>Firebase secured authentication.</p>
+</div>
+
+<div class="card feature">
+<div class="feature-icon">📱</div>
+<h3>Easy Ordering</h3>
+<p>Simple and responsive ordering.</p>
+</div>
+
+</div>
+</div>
+
+</section>
+
+
+<!-- ================= MENU ================= -->
+
+<section id="menu" class="page">
+
+<div class="section">
+
+<h2>🍔 Food Menu</h2>
+
+<div class="menu-tools">
+
+<input
+id="search"
+placeholder="Search food..."
+>
+
+<select id="category">
+
+<option value="all">All Categories</option>
+<option value="Pizza">Pizza</option>
+<option value="Burger">Burger</option>
+<option value="Indian">Indian</option>
+<option value="Noodles">Noodles</option>
+<option value="Dessert">Dessert</option>
+<option value="Drinks">Drinks</option>
+
+</select>
+
+</div>
+
+<div id="foodContainer" class="food-grid"></div>
+
+</div>
+
+</section>
+
+
+<!-- ================= CART ================= -->
+
+<section id="cart" class="page">
+
+<div class="section">
+
+<h2>🛒 My Cart</h2>
+
+<div id="cartContainer"></div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ORDERS ================= -->
+
+<section id="orders" class="page">
+
+<div class="section">
+
+<h2>📦 My Orders</h2>
+
+<div id="ordersContainer"></div>
+
+</div>
+
+</section>
+
+
+<!-- ================= CUSTOMER AUTH ================= -->
+
+<section id="auth" class="page">
+
+<div class="auth-wrap">
+
+<div class="auth-box">
+
+<h2 id="authTitle">Login</h2>
+
+<p id="authSubtitle">
+Login to your SmartEats account
+</p>
+
+<form id="authForm">
+
+<div id="nameBox" style="display:none">
+
+<label>Full Name</label>
+
+<input
+id="name"
+placeholder="Enter your name"
+>
+
+</div>
+
+<label>Email</label>
+
+<input
+id="email"
+type="email"
+placeholder="Enter email"
+required
+>
+
+<label>Password</label>
+
+<input
+id="password"
+type="password"
+placeholder="Minimum 6 characters"
+required
+>
+
+<button class="btn" type="submit" id="authSubmit">
+Login
+</button>
+
+</form>
+
+<div id="authMessage" class="message"></div>
+
+<div class="auth-switch">
+
+<span id="switchText">
+Don't have an account?
+</span>
+
+<a onclick="toggleAuth()" id="switchLink">
+Create Account
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ADMIN LOGIN ================= -->
+
+<section id="adminLogin" class="page">
+
+<div class="auth-wrap">
+
+<div class="auth-box">
+
+<h2>⚙️ Admin Login</h2>
+
+<p>Administrator access only</p>
+
+<form id="adminLoginForm">
+
+<label>Admin Email</label>
+
+<input
+id="adminEmail"
+type="email"
+placeholder="Admin email"
+required
+>
+
+<label>Admin Password</label>
+
+<input
+id="adminPassword"
+type="password"
+placeholder="Admin password"
+required
+>
+
+<button class="btn" type="submit">
+Admin Login
+</button>
+
+</form>
+
+<div id="adminMessage" class="message"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ADMIN PANEL ================= -->
+
+<section id="adminPanel" class="page">
+
+<div class="section">
+
+<div class="admin-header">
+
+<h2>⚙️ SmartEats Admin Panel</h2>
+
+<p id="adminWelcome">
+Administrator Dashboard
+</p>
+
+<br>
+
+<button class="btn" onclick="adminLogout()">
+🚪 Admin Logout
+</button>
+
+</div>
+
+
+<!-- STATISTICS -->
+
+<div class="admin-stats">
+
+<div class="stat">
+<div>👥</div>
+<p>Users</p>
+<h2 id="userCount">0</h2>
+</div>
+
+<div class="stat">
+<div>🍔</div>
+<p>Food Items</p>
+<h2 id="foodCount">0</h2>
+</div>
+
+<div class="stat">
+<div>📦</div>
+<p>Orders</p>
+<h2 id="orderCount">0</h2>
+</div>
+
+</div>
+
+
+<!-- ADD FOOD -->
+
+<div class="admin-form">
+
+<h2>➕ Add Food</h2>
+
+<form id="foodForm">
+
+<input
+id="newFoodName"
+placeholder="Food name"
+required
+>
+
+<select id="newFoodCategory" required>
+
+<option value="Pizza">Pizza</option>
+<option value="Burger">Burger</option>
+<option value="Indian">Indian</option>
+<option value="Noodles">Noodles</option>
+<option value="Dessert">Dessert</option>
+<option value="Drinks">Drinks</option>
+
+</select>
+
+<input
+id="newFoodPrice"
+type="number"
+min="1"
+placeholder="Price ₹"
+required
+>
+
+<input
+id="newFoodEmoji"
+placeholder="Food emoji e.g. 🍕"
+>
+
+<textarea
+id="newFoodDescription"
+placeholder="Food description"
+required
+></textarea>
+
+<button class="btn" type="submit">
+Add Food
+</button>
+
+</form>
+
+<div id="foodMessage" class="message"></div>
+
+</div>
+
+
+<!-- FOOD MANAGEMENT -->
+
+<h2 style="margin-bottom:20px">
+🍔 Manage Food
+</h2>
+
+<div id="adminFoodContainer"
+class="food-grid">
+</div>
+
+
+<!-- ORDER MANAGEMENT -->
+
+<h2 style="margin:40px 0 20px">
+📦 Manage Orders
+</h2>
+
+<div id="adminOrdersContainer"></div>
+
+</div>
+
+</section>
+
+
+<footer>
+<h3>🍔 SmartEats</h3>
+<p>Smart Food Ordering System</p>
+<p>© 2026 SmartEats</p>
+<p><b>Vishwanath Bajbale | Inplant Training 2026</b></p>
+</footer>
+
+<div id="toast"></div>
+
+
+<!-- ================= FIREBASE ================= -->
+
+<script type="module">
+
+import {
+initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+set,
+push,
+get,
+onValue,
+remove,
+update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDodY5imfyNfCQKSmSFgCj7eEJLewyeRko",
+  authDomain: "myfood-6a1d7.firebaseapp.com",
+  projectId: "myfood-6a1d7",
+  storageBucket: "myfood-6a1d7.firebasestorage.app",
+  messagingSenderId: "878326279351",
+  appId: "1:878326279351:web:4d394a74fe6cd4321f3132",
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getDatabase(app);
+
+
+/* =====================================================
+   ADMIN ACCOUNT
+===================================================== */
+
+const ADMIN_EMAIL =
+"vishwanathbajbale1991@gmail.com";
+
+
+let currentUser = null;
+
+let registerMode = false;
+
+let foods = [];
+
+let cart =
+JSON.parse(localStorage.getItem("smartEatsCart")) || [];
+
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+window.showPage = function(page){
+
+document
+.querySelectorAll(".page")
+.forEach(p => p.classList.remove("active"));
+
+document
+.getElementById(page)
+.classList.add("active");
+
+window.scrollTo(0,0);
+
+if(page === "cart")
+displayCart();
+
+if(page === "orders")
+loadUserOrders();
+
+if(page === "adminPanel"){
+
+if(!isAdmin()){
+
+showPage("adminLogin");
+
+return;
+
+}
+
+loadAdmin();
+
+}
+
+};
+
+
+/* =====================================================
+   CUSTOMER REGISTER / LOGIN
+===================================================== */
+
+window.toggleAuth = function(){
+
+registerMode = !registerMode;
+
+document
+.getElementById("nameBox")
+.style.display =
+registerMode ? "block" : "none";
+
+document
+.getElementById("name")
+.required =
+registerMode;
+
+document
+.getElementById("authTitle")
+.innerText =
+registerMode ? "Create Account" : "Login";
+
+document
+.getElementById("authSubtitle")
+.innerText =
+registerMode
+? "Create your SmartEats account"
+: "Login to your SmartEats account";
+
+document
+.getElementById("authSubmit")
+.innerText =
+registerMode ? "Create Account" : "Login";
+
+document
+.getElementById("switchText")
+.innerText =
+registerMode
+? "Already have an account?"
+: "Don't have an account?";
+
+document
+.getElementById("switchLink")
+.innerText =
+registerMode ? "Login" : "Create Account";
+
+};
+
+
+document
+.getElementById("authForm")
+.addEventListener("submit",async e=>{
+
+e.preventDefault();
+
+const email =
+document.getElementById("email")
+.value.trim();
+
+const password =
+document.getElementById("password")
+.value;
+
+const message =
+document.getElementById("authMessage");
+
+message.style.color="#222";
+message.innerText="Please wait...";
+
+try{
+
+if(registerMode){
+
+const name =
+document.getElementById("name")
+.value.trim();
+
+if(password.length < 6)
+throw new Error(
+"Password must contain at least 6 characters."
+);
+
+const result =
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+await set(
+ref(db,"users/"+result.user.uid),
+{
+name:name,
+email:email,
+role:"customer",
+createdAt:new Date().toISOString()
+}
+);
+
+message.style.color="green";
+message.innerText=
+"Registration successful!";
+
+document.getElementById("authForm").reset();
+
+setTimeout(
+()=>showPage("menu"),
+800
+);
+
+}else{
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+message.style.color="green";
+message.innerText=
+"Login successful!";
+
+setTimeout(
+()=>showPage("menu"),
+600
+);
+
+}
+
+}catch(error){
+
+message.style.color="red";
+message.innerText=
+getError(error);
+
+}
+
+});
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+onAuthStateChanged(auth,user=>{
+
+currentUser=user;
+
+if(user){
+
+document.getElementById("loginNav")
+.style.display="none";
+
+document.getElementById("logoutNav")
+.style.display="block";
+
+}else{
+
+document.getElementById("loginNav")
+.style.display="block";
+
+document.getElementById("logoutNav")
+.style.display="none";
+
+}
+
+});
+
+
+/* =====================================================
+   CUSTOMER LOGOUT
+===================================================== */
+
+window.logout = async function(){
+
+await signOut(auth);
+
+showToast("Logged out successfully");
+
+showPage("home");
+
+};
+
+
+/* =====================================================
+   ADMIN LOGIN
+===================================================== */
+
+document
+.getElementById("adminLoginForm")
+.addEventListener("submit",async e=>{
+
+e.preventDefault();
+
+const email =
+document.getElementById("adminEmail")
+.value.trim()
+.toLowerCase();
+
+const password =
+document.getElementById("adminPassword")
+.value;
+
+const message =
+document.getElementById("adminMessage");
+
+
+if(email !== ADMIN_EMAIL.toLowerCase()){
+
+message.style.color="red";
+
+message.innerText=
+"Access denied. Admin account only.";
+
+return;
+
+}
+
+message.style.color="#222";
+message.innerText="Logging in...";
+
+try{
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+message.style.color="green";
+
+message.innerText=
+"Admin login successful!";
+
+setTimeout(
+()=>showPage("adminPanel"),
+600
+);
+
+}catch(error){
+
+message.style.color="red";
+
+message.innerText=
+getError(error);
+
+}
+
+});
+
+
+/* =====================================================
+   ADMIN CHECK
+===================================================== */
+
+function isAdmin(){
+
+return currentUser &&
+currentUser.email &&
+currentUser.email.toLowerCase()
+=== ADMIN_EMAIL.toLowerCase();
+
+}
+
+
+/* =====================================================
+   ADMIN LOGOUT
+===================================================== */
+
+window.adminLogout = async function(){
+
+await signOut(auth);
+
+showToast(
+"Admin logged out successfully"
+);
+
+showPage("home");
+
+};
+
+
+/* =====================================================
+   FOOD DATABASE
+===================================================== */
+
+onValue(
+ref(db,"foods"),
+snapshot=>{
+
+const data=snapshot.val();
+
+foods=[];
+
+if(data){
+
+Object.keys(data).forEach(id=>{
+
+foods.push({
+id:id,
+...data[id]
+});
+
+});
+
+}
+
+if(foods.length===0){
+
+foods=[
+{
+id:"demo1",
+name:"Margherita Pizza",
+category:"Pizza",
+price:249,
+emoji:"🍕",
+description:"Classic cheese pizza."
+},
+{
+id:"demo2",
+name:"Cheese Burger",
+category:"Burger",
+price:179,
+emoji:"🍔",
+description:"Juicy cheese burger."
+},
+{
+id:"demo3",
+name:"Paneer Butter Masala",
+category:"Indian",
+price:229,
+emoji:"🍛",
+description:"Creamy paneer curry."
+},
+{
+id:"demo4",
+name:"Veg Noodles",
+category:"Noodles",
+price:149,
+emoji:"🍜",
+description:"Tasty vegetable noodles."
+},
+{
+id:"demo5",
+name:"Chocolate Cake",
+category:"Dessert",
+price:129,
+emoji:"🍰",
+description:"Soft chocolate cake."
+},
+{
+id:"demo6",
+name:"Cold Drink",
+category:"Drinks",
+price:59,
+emoji:"🥤",
+description:"Refreshing cold drink."
+}
+];
+
+}
+
+displayFoods(foods);
+
+}
+);
+
+
+/* =====================================================
+   DISPLAY FOOD
+===================================================== */
+
+function displayFoods(list){
+
+const container =
+document.getElementById("foodContainer");
+
+if(!list.length){
+
+container.innerHTML=
+`<div class="empty">No food found.</div>`;
+
+return;
+
+}
+
+container.innerHTML="";
+
+list.forEach(food=>{
+
+const div =
+document.createElement("div");
+
+div.className="food-card";
+
+div.innerHTML=`
+
+<div class="food-img">
+${food.emoji || "🍴"}
+</div>
+
+<h3>${safe(food.name)}</h3>
+
+<p>${safe(food.description || "")}</p>
+
+<div class="food-bottom">
+
+<span class="price">
+₹${Number(food.price)}
+</span>
+
+<button class="btn">
+Add
+</button>
+
+</div>
+`;
+
+div
+.querySelector("button")
+.onclick=()=>addToCart(food);
+
+container.appendChild(div);
+
+});
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+document
+.getElementById("search")
+.addEventListener("input",filterFood);
+
+document
+.getElementById("category")
+.addEventListener("change",filterFood);
+
+
+function filterFood(){
+
+const search =
+document.getElementById("search")
+.value.toLowerCase();
+
+const category =
+document.getElementById("category")
+.value;
+
+const result =
+foods.filter(food=>{
+
+const name =
+String(food.name)
+.toLowerCase();
+
+return name.includes(search) &&
+(category==="all" ||
+food.category===category);
+
+});
+
+displayFoods(result);
+
+}
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+function addToCart(food){
+
+const item =
+cart.find(x=>x.id===food.id);
+
+if(item){
+
+item.quantity++;
+
+}else{
+
+cart.push({
+
+id:food.id,
+
+name:food.name,
+
+price:Number(food.price),
+
+emoji:food.emoji || "🍴",
+
+quantity:1
+
+});
+
+}
+
+saveCart();
+
+showToast(
+food.name+" added to cart"
+);
+
+}
+
+
+function saveCart(){
+
+localStorage.setItem(
+"smartEatsCart",
+JSON.stringify(cart)
+);
+
+updateCartCount();
+
+displayCart();
+
+}
+
+
+function updateCartCount(){
+
+const count =
+cart.reduce(
+(sum,item)=>sum+item.quantity,
+0
+);
+
+document.getElementById("cartCount")
+.innerText=count;
+
+}
+
+
+function displayCart(){
+
+const container =
+document.getElementById("cartContainer");
+
+if(!cart.length){
+
+container.innerHTML=`
+
+<div class="empty">
+
+<h3>Your cart is empty 🛒</h3>
+
+<br>
+
+<button
+class="btn"
+onclick="showPage('menu')">
+
+Browse Menu
+
+</button>
+
+</div>
+
+`;
+
+return;
+
+}
+
+let total=0;
+
+let html=`<div class="cart-box">`;
+
+cart.forEach((item,index)=>{
+
+const itemTotal =
+item.price*item.quantity;
+
+total+=itemTotal;
+
+html+=`
+
+<div class="cart-item">
+
+<div>
+<h3>
+${item.emoji}
+${safe(item.name)}
+</h3>
+
+<p>₹${item.price} each</p>
+</div>
+
+<div class="qty">
+
+<button
+onclick="changeQty(${index},-1)">
+−
+</button>
+
+<strong>
+${item.quantity}
+</strong>
+
+<button
+onclick="changeQty(${index},1)">
++
+</button>
+
+</div>
+
+<strong>
+₹${itemTotal}
+</strong>
+
+<button
+class="btn-danger"
+onclick="removeCart(${index})">
+
+Remove
+
+</button>
+
+</div>
+`;
+
+});
+
+html+=`
+
+<h2 style="text-align:right;margin-top:20px">
+Total: ₹${total}
+</h2>
+
+<div class="checkout">
+
+<textarea
+id="orderAddress"
+rows="3"
+placeholder="Delivery address">
+</textarea>
+
+<select id="orderPayment">
+
+<option value="Cash on Delivery">
+Cash on Delivery
+</option>
+
+<option value="UPI">
+UPI
+</option>
+
+</select>
+
+<button
+class="btn"
+onclick="placeOrder()">
+
+📦 Place Order
+
+</button>
+
+</div>
+
+</div>
+`;
+
+container.innerHTML=html;
+
+}
+
+
+window.changeQty=function(index,amount){
+
+cart[index].quantity+=amount;
+
+if(cart[index].quantity<=0)
+cart.splice(index,1);
+
+saveCart();
+
+};
+
+
+window.removeCart=function(index){
+
+cart.splice(index,1);
+
+saveCart();
+
+};
+
+
+/* =====================================================
+   PLACE ORDER
+===================================================== */
+
+window.placeOrder=async function(){
+
+if(!currentUser){
+
+showToast("Please login first");
+
+showPage("auth");
+
+return;
+
+}
+
+if(!cart.length){
+
+showToast("Cart is empty");
+
+return;
+
+}
+
+const address =
+document.getElementById("orderAddress")
+.value.trim();
+
+const payment =
+document.getElementById("orderPayment")
+.value;
+
+if(!address){
+
+showToast(
+"Please enter delivery address"
+);
+
+return;
+
+}
+
+const total =
+cart.reduce(
+(sum,item)=>
+sum+item.price*item.quantity,
+0
+);
+
+try{
+
+const orderRef =
+push(
+ref(
+db,
+"orders/"+currentUser.uid
+)
+);
+
+await set(
+orderRef,
+{
+
+userId:currentUser.uid,
+
+customerEmail:
+currentUser.email,
+
+items:cart,
+
+total:total,
+
+address:address,
+
+paymentMethod:payment,
+
+status:"Pending",
+
+createdAt:
+new Date().toISOString()
+
+}
+);
+
+cart=[];
+
+localStorage.removeItem(
+"smartEatsCart"
+);
+
+updateCartCount();
+
+displayCart();
+
+showToast(
+"Order placed successfully 🎉"
+);
+
+setTimeout(
+()=>showPage("orders"),
+700
+);
+
+}catch(error){
+
+showToast(
+"Order failed: "+error.message
+);
+
+}
+
+};
+
+
+/* =====================================================
+   CUSTOMER ORDERS
+===================================================== */
+
+async function loadUserOrders(){
+
+const container =
+document.getElementById(
+"ordersContainer"
+);
+
+if(!currentUser){
+
+container.innerHTML=`
+
+<div class="empty">
+
+<h3>Please login first.</h3>
+
+<br>
+
+<button
+class="btn"
+onclick="showPage('auth')">
+
+Login
+
+</button>
+
+</div>
+
+`;
+
+return;
+
+}
+
+container.innerHTML=
+"<p>Loading orders...</p>";
+
+try{
+
+const snapshot =
+await get(
+ref(
+db,
+"orders/"+currentUser.uid
+)
+);
+
+if(!snapshot.exists()){
+
+container.innerHTML=`
+
+<div class="empty">
+
+<h3>No orders yet 📦</h3>
+
+<br>
+
+<button
+class="btn"
+onclick="showPage('menu')">
+
+Order Food
+
+</button>
+
+</div>
+
+`;
+
+return;
+
+}
+
+const data=snapshot.val();
+
+const orders =
+Object.keys(data)
+.map(id=>({
+id:id,
+...data[id]
+}))
+.reverse();
+
+container.innerHTML="";
+
+orders.forEach(order=>{
+
+let items="";
+
+(order.items||[]).forEach(item=>{
+
+items+=`
+
+<p style="margin:6px 0">
+${safe(item.name)}
+× ${item.quantity}
+-
+₹${item.price*item.quantity}
+</p>
+
+`;
+
+});
+
+const div=
+document.createElement("div");
+
+div.className="order";
+
+div.innerHTML=`
+
+<div class="order-head">
+
+<div>
+
+<h3>
+Order #${order.id.slice(-6)}
+</h3>
+
+<small>
+${new Date(order.createdAt)
+.toLocaleString()}
+</small>
+
+</div>
+
+<span class="status">
+${safe(order.status)}
+</span>
+
+</div>
+
+<hr style="margin:15px 0">
+
+${items}
+
+<hr style="margin:15px 0">
+
+<p>
+<strong>Address:</strong>
+${safe(order.address)}
+</p>
+
+<p>
+<strong>Payment:</strong>
+${safe(order.paymentMethod)}
+</p>
+
+<h3 style="margin-top:10px">
+Total: ₹${order.total}
+</h3>
+
+`;
+
+container.appendChild(div);
+
+});
+
+}catch(error){
+
+container.innerHTML=
+`<div class="empty">
+Unable to load orders.
+</div>`;
+
+}
+
+}
+
+
+/* =====================================================
+   ADMIN DASHBOARD
+===================================================== */
+
+async function loadAdmin(){
+  if(!isAdmin()){
+
+showPage("adminLogin");
+
+return;
+
+}
+
+document.getElementById("adminWelcome")
+.innerText=
+"Logged in as "+currentUser.email;
+
+await loadAdminFood();
+
+await loadAdminOrders();
+
+await loadAdminUsers();
+
+}
+
+
+/* =====================================================
+   ADMIN USERS
+===================================================== */
+
+async function loadAdminUsers(){
+
+const snapshot =
+await get(
+ref(db,"users")
+);
+
+const data=snapshot.val();
+
+document.getElementById("userCount")
+.innerText=
+data ? Object.keys(data).length : 0;
+
+}
+
+
+/* =====================================================
+   ADMIN FOOD
+===================================================== */
+
+async function loadAdminFood(){
+
+const container =
+document.getElementById(
+"adminFoodContainer"
+);
+
+const snapshot =
+await get(
+ref(db,"foods")
+);
+
+const data=snapshot.val();
+
+if(!data){
+
+container.innerHTML=
+`<div class="empty">
+No food items in database.
+</div>`;
+
+document.getElementById(
+"foodCount"
+).innerText="0";
+
+return;
+
+}
+
+const list =
+Object.keys(data)
+.map(id=>({
+id:id,
+...data[id]
+}));
+
+document.getElementById(
+"foodCount"
+).innerText=list.length;
+
+container.innerHTML="";
+
+list.forEach(food=>{
+
+const div =
+document.createElement("div");
+
+div.className="admin-food";
+
+div.innerHTML=`
+
+<div class="emoji">
+${food.emoji || "🍴"}
+</div>
+
+<h3>
+${safe(food.name)}
+</h3>
+
+<p>
+${safe(food.category)}
+</p>
+
+<p>
+${safe(food.description || "")}
+</p>
+
+<strong>
+₹${food.price}
+</strong>
+
+<br><br>
+
+<button
+class="btn-danger">
+
+🗑️ Delete
+
+</button>
+
+`;
+
+div
+.querySelector("button")
+.onclick=
+()=>deleteFood(food.id);
+
+container.appendChild(div);
+
+});
+
+}
+
+
+/* =====================================================
+   ADD FOOD
+===================================================== */
+
+document
+.getElementById("foodForm")
+.addEventListener("submit",async e=>{
+
+e.preventDefault();
+
+if(!isAdmin()){
+
+showToast("Admin access required");
+
+return;
+
+}
+
+const name =
+document.getElementById("newFoodName")
+.value.trim();
+
+const category =
+document.getElementById("newFoodCategory")
+.value;
+
+const price =
+Number(
+document.getElementById("newFoodPrice")
+.value
+);
+
+const emoji =
+document.getElementById("newFoodEmoji")
+.value.trim()
+||"🍴";
+
+const description =
+document
+.getElementById("newFoodDescription")
+.value.trim();
+
+try{
+
+const newRef =
+push(ref(db,"foods"));
+
+await set(
+newRef,
+{
+name:name,
+category:category,
+price:price,
+emoji:emoji,
+description:description
+}
+);
+
+document.getElementById("foodForm")
+.reset();
+
+document.getElementById("foodMessage")
+.style.color="green";
+
+document.getElementById("foodMessage")
+.innerText=
+"Food added successfully.";
+
+await loadAdminFood();
+
+showToast("Food added");
+
+}catch(error){
+
+document.getElementById("foodMessage")
+.style.color="red";
+
+document.getElementById("foodMessage")
+.innerText=
+error.message;
+
+}
+
+});
+
+
+/* =====================================================
+   DELETE FOOD
+===================================================== */
+
+async function deleteFood(id){
+
+if(!isAdmin())return;
+
+if(!confirm(
+"Are you sure you want to delete this food?"
+))
+return;
+
+try{
+
+await remove(
+ref(db,"foods/"+id)
+);
+
+await loadAdminFood();
+
+showToast("Food deleted");
+
+}catch(error){
+
+showToast(
+"Delete failed"
+);
+
+}
+
+}
+
+
+/* =====================================================
+   ADMIN ORDERS
+===================================================== */
+
+async function loadAdminOrders(){
+  const container =
+document.getElementById(
+"adminOrdersContainer"
+);
+
+const snapshot =
+await get(
+ref(db,"orders")
+);
+
+const data=snapshot.val();
+
+if(!data){
+
+container.innerHTML=
+`<div class="empty">
+No orders found.
+</div>`;
+
+document.getElementById(
+"orderCount"
+).innerText="0";
+
+return;
+
+}
+
+let orders=[];
+
+Object.keys(data).forEach(uid=>{
+
+Object.keys(data[uid])
+.forEach(orderId=>{
+
+orders.push({
+id:orderId,
+uid:uid,
+...data[uid][orderId]
+});
+
+});
+
+});
+
+orders.reverse();
+
+document.getElementById(
+"orderCount"
+).innerText=
+orders.length;
+
+container.innerHTML="";
+
+orders.forEach(order=>{
+
+const div =
+document.createElement("div");
+
+div.className="admin-order";
+
+let items="";
+
+(order.items||[]).forEach(item=>{
+
+items+=`
+
+<li>
+${safe(item.name)}
+× ${item.quantity}
+</li>
+
+`;
+
+});
+
+div.innerHTML=`
+
+<div class="order-head">
+
+<div>
+
+<h3>
+📦 Order #${order.id.slice(-6)}
+</h3>
+
+<small>
+${safe(order.customerEmail)}
+</small>
+
+</div>
+
+<span class="status">
+${safe(order.status)}
+</span>
+
+</div>
+
+<hr style="margin:15px 0">
+
+<ul>
+${items}
+</ul>
+
+<p style="margin-top:12px">
+<strong>Address:</strong>
+${safe(order.address)}
+</p>
+
+<p>
+<strong>Payment:</strong>
+${safe(order.paymentMethod)}
+</p>
+
+<h3 style="margin-top:10px">
+Total: ₹${order.total}
+</h3>
+
+<select class="statusSelect">
+
+<option value="Pending">Pending</option>
+<option value="Confirmed">Confirmed</option>
+<option value="Preparing">Preparing</option>
+<option value="Out for Delivery">
+Out for Delivery
+</option>
+<option value="Delivered">Delivered</option>
+<option value="Cancelled">Cancelled</option>
+
+</select>
+
+`;
+
+const select =
+div.querySelector(".statusSelect");
+
+select.value=order.status;
+
+select.onchange=()=>{
+
+updateOrderStatus(
+order.uid,
+order.id,
+select.value
+);
+
+};
+
+container.appendChild(div);
+
+});
+
+}
+
+
+/* =====================================================
+   UPDATE ORDER STATUS
+===================================================== */
+
+async function updateOrderStatus(
+uid,
+orderId,
+status
+){
+
+if(!isAdmin())return;
+
+try{
+
+await update(
+ref(
+db,
+"orders/"+uid+"/"+orderId
+),
+{
+status:status
+}
+);
+
+showToast(
+"Order status updated"
+);
+
+await loadAdminOrders();
+
+}catch(error){
+
+showToast(
+"Unable to update order"
+);
+
+}
+
+}
+
+
+/* =====================================================
+   ERROR HANDLER
+===================================================== */
+
+function getError(error){
+
+switch(error.code){
+
+case "auth/operation-not-allowed":
+return "Enable Email/Password Authentication in Firebase Console.";
+
+case "auth/email-already-in-use":
+return "This email is already registered.";
+
+case "auth/invalid-email":
+return "Invalid email address.";
+
+case "auth/invalid-credential":
+return "Invalid email or password.";
+
+case "auth/weak-password":
+return "Password must contain at least 6 characters.";
+
+case "auth/network-request-failed":
+return "Network error. Check your internet.";
+
+default:
+return error.message;
+
+}
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message){
+
+const toast =
+document.getElementById("toast");
+
+toast.innerText=message;
+
+toast.style.display="block";
+
+setTimeout(
+()=>toast.style.display="none",
+3000
+);
+
+}
+
+
+/* =====================================================
+   SECURITY HELPER
+===================================================== */
+
+function safe(value){
+
+return String(value ?? "")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+updateCartCount();
+
+displayCart();
+
+</script>
+
+</body>
+</html>
